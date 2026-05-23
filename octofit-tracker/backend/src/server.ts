@@ -22,7 +22,7 @@ app.get("/api/health", (req, res) => {
 
 connectDatabase()
   .then(() => {
-    const codespaceName = process.env.CODESPACE_NAME;
+    const codespaceName = 'bug-free-goggles-77vv9pjvgj3r676'
     const baseUrl = codespaceName
       ? `https://${codespaceName}-8000.app.github.dev`
       : `http://localhost:${PORT}`;
