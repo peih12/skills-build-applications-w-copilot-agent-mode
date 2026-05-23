@@ -22,9 +22,9 @@ app.get("/api/health", (req, res) => {
 
 connectDatabase()
   .then(() => {
-    const CODESPACE_NAME = 'bug-free-goggles-77vv9pjvgj3r676'
-    const baseUrl = CODESPACE_NAME
-      ? `https://${CODESPACE_NAME}-8000.app.github.dev`
+    const codespaceName = process.env.CODESPACE_NAME;
+    const baseUrl = codespaceName
+      ? `https://${codespaceName}-8000.app.github.dev`
       : `http://localhost:${PORT}`;
 
     console.log("Connected to MongoDB at", MONGO_URI);
