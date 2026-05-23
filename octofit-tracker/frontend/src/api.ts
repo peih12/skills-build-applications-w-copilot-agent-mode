@@ -1,4 +1,4 @@
-const codespaceName = import.meta.env.VITE_CODESPACE_NAME;
+const codespaceName = 'bug-free-goggles-77vv9pjvgj3r676';
 const DEFAULT_API_HOST = "http://localhost:8000";
 
 export const apiHost = codespaceName
