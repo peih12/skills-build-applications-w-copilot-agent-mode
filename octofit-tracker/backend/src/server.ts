@@ -1,3 +1,4 @@
+import cors from "cors";
 import express from "express";
 import { connectDatabase, MONGO_URI } from "./config/database";
 import usersRouter from "./routes/users";
@@ -9,6 +10,7 @@ import leaderboardRouter from "./routes/leaderboard";
 const PORT = 8000;
 
 const app = express();
+app.use(cors({ origin: true }));
 app.use(express.json());
 app.use("/api/users", usersRouter);
 app.use("/api/teams", teamsRouter);
