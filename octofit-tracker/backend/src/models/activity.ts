@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, Types } from "mongoose";
 
 export interface ActivityDocument extends Document {
   name: string;
@@ -7,6 +7,8 @@ export interface ActivityDocument extends Document {
   caloriesBurned?: number;
   date: Date;
   notes?: string;
+  user?: Types.ObjectId;
+  team?: Types.ObjectId;
 }
 
 const activitySchema = new Schema<ActivityDocument>(
@@ -16,7 +18,9 @@ const activitySchema = new Schema<ActivityDocument>(
     durationMinutes: { type: Number, required: true, min: 0 },
     caloriesBurned: { type: Number, min: 0, default: 0 },
     date: { type: Date, required: true, default: Date.now },
-    notes: { type: String, trim: true }
+    notes: { type: String, trim: true },
+    user: { type: Schema.Types.ObjectId, ref: "User" },
+    team: { type: Schema.Types.ObjectId, ref: "Team" }
   },
   { timestamps: true }
 );

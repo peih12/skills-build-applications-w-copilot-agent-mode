@@ -1,21 +1,26 @@
 import express from "express";
-import mongoose from "mongoose";
-import activityRouter from "./routes/activity";
+import { connectDatabase, MONGO_URI } from "./config/database";
+import usersRouter from "./routes/users";
+import teamsRouter from "./routes/teams";
+import activitiesRouter from "./routes/activity";
+import workoutsRouter from "./routes/workouts";
+import leaderboardRouter from "./routes/leaderboard";
 
 const PORT = 8000;
-const MONGO_DB = process.env.MONGO_DB || "octofit_db";
-const MONGO_URI = `mongodb://127.0.0.1:27017/${MONGO_DB}`;
 
 const app = express();
 app.use(express.json());
-app.use("/api/activities", activityRouter);
+app.use("/api/users", usersRouter);
+app.use("/api/teams", teamsRouter);
+app.use("/api/activities", activitiesRouter);
+app.use("/api/workouts", workoutsRouter);
+app.use("/api/leaderboard", leaderboardRouter);
 
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "OctoFit Tracker backend is running." });
 });
 
-mongoose
-  .connect(MONGO_URI)
+connectDatabase()
   .then(() => {
     const codespaceName = process.env.CODESPACE_NAME;
     const baseUrl = codespaceName

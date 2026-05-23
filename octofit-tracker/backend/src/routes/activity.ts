@@ -5,15 +5,15 @@ const router = Router();
 
 router.get("/", async (req, res) => {
   try {
-    const activities = await Activity.find().sort({ date: -1 });
-    res.json(activities);
+    const activities = await Activity.find().populate("user team").sort({ date: -1 });
+    res.json({ activities });
   } catch (error) {
     res.status(500).json({ error: "Failed to fetch activities." });
   }
 });
 
 router.post("/", async (req, res) => {
-  const { name, type, durationMinutes, caloriesBurned, date, notes } = req.body;
+  const { name, type, durationMinutes, caloriesBurned, date, notes, user, team } = req.body;
 
   if (!name || !type || durationMinutes == null) {
     return res.status(400).json({
@@ -29,9 +29,11 @@ router.post("/", async (req, res) => {
       caloriesBurned,
       date,
       notes,
+      user,
+      team
     });
 
-    res.status(201).json(activity);
+    res.status(201).json({ activity });
   } catch (error) {
     res.status(500).json({ error: "Failed to create activity." });
   }
